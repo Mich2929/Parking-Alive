@@ -1,0 +1,6 @@
+{
+  "name": "ParkWhere SG - Real-Time Singapore Carpark & Mobility Engine",
+  "description": "Live Singapore carpark lot availability across HDB, URA, and LTA DataMall, ERP gantry rates, expressway traffic cameras, and EV charging points.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
