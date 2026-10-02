@@ -143,6 +143,33 @@ export const LTA_FALLBACK_DATA = [
     LotType: 'C',
     Agency: 'LTA',
   },
+  {
+    CarParkID: 'AM-01',
+    Area: 'Ang Mo Kio',
+    Development: 'AMK Hub Basement',
+    Location: '1.36940 103.84850',
+    AvailableLots: 178,
+    LotType: 'C',
+    Agency: 'LTA',
+  },
+  {
+    CarParkID: 'BD-01',
+    Area: 'Bedok',
+    Development: 'Bedok Mall Basement',
+    Location: '1.32420 103.93010',
+    AvailableLots: 88,
+    LotType: 'C',
+    Agency: 'LTA',
+  },
+  {
+    CarParkID: 'BG-01',
+    Area: 'Bugis',
+    Development: 'Bugis Junction Basement',
+    Location: '1.29980 103.85520',
+    AvailableLots: 94,
+    LotType: 'C',
+    Agency: 'LTA',
+  },
 ];
 
 /**

@@ -81,6 +81,374 @@ export const HOTSPOTS: Hotspot[] = [
   },
 ];
 
+export const ORCHARD_CARPARKS: Carpark[] = [
+  {
+    id: 'orch-ion',
+    code: 'OR-01',
+    name: 'ION Orchard Basement',
+    address: '2 Orchard Turn, S(238801)',
+    postalCode: '238801',
+    agency: 'COMMERCIAL',
+    type: 'COMMERCIAL / MALL',
+    distanceMeters: 120,
+    walkMinutes: 2,
+    driveMinutes: 1,
+    totalLots: 650,
+    availableLots: 78,
+    carLots: 78,
+    motorLots: 12,
+    heavyLots: 0,
+    rateDescription: '$2.67 for 1st hr, $1.34 / sub 30 min',
+    shortRate: '$1.34/30m',
+    evChargingInfo: '4x Shell Recharge 50kW DC Fast Chargers',
+    hasEv: true,
+    evChargerCount: 4,
+    hasFreeSunPh: false,
+    warningNotice: 'Peak retail volume: enter via Paterson Rd',
+    erpGantryFee: 2.0,
+    heightLimitMeters: 2.1,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.304, lng: 103.832, mapX: 42, mapY: 48 },
+  },
+  {
+    id: 'orch-takashimaya',
+    code: 'OR-02',
+    name: 'Ngee Ann City (Takashimaya)',
+    address: '391 Orchard Rd, S(238872)',
+    postalCode: '238872',
+    agency: 'COMMERCIAL',
+    type: 'COMMERCIAL / MALL',
+    distanceMeters: 260,
+    walkMinutes: 3,
+    driveMinutes: 2,
+    totalLots: 1100,
+    availableLots: 112,
+    carLots: 112,
+    motorLots: 20,
+    heavyLots: 0,
+    rateDescription: '$2.80 1st hr, $1.40 / sub 30 min',
+    shortRate: '$1.40/30m',
+    evChargingInfo: '3x SP Mobility 22kW AC Type 2',
+    hasEv: true,
+    evChargerCount: 3,
+    hasFreeSunPh: false,
+    erpGantryFee: 2.0,
+    heightLimitMeters: 2.05,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3025, lng: 103.8354, mapX: 46, mapY: 50 },
+  },
+  {
+    id: 'orch-paragon',
+    code: 'OR-03',
+    name: 'Paragon Shopping Centre',
+    address: '290 Orchard Rd, S(238859)',
+    postalCode: '238859',
+    agency: 'COMMERCIAL',
+    type: 'COMMERCIAL / MALL',
+    distanceMeters: 380,
+    walkMinutes: 5,
+    driveMinutes: 2,
+    totalLots: 420,
+    availableLots: 45,
+    carLots: 45,
+    motorLots: 8,
+    heavyLots: 0,
+    rateDescription: '$3.00 for 1st hr, $1.50 / sub 30 min',
+    shortRate: '$1.50/30m',
+    hasEv: false,
+    hasFreeSunPh: false,
+    erpGantryFee: 2.0,
+    heightLimitMeters: 2.0,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3039, lng: 103.8358, mapX: 47, mapY: 48 },
+  },
+];
+
+export const BISHAN_CARPARKS: Carpark[] = [
+  {
+    id: 'bs-j8',
+    code: 'BS-01',
+    name: 'Junction 8 Shopping Centre',
+    address: '9 Bishan Place, S(579837)',
+    postalCode: '579837',
+    agency: 'COMMERCIAL',
+    type: 'COMMERCIAL / MALL',
+    distanceMeters: 110,
+    walkMinutes: 1,
+    driveMinutes: 1,
+    totalLots: 310,
+    availableLots: 195,
+    carLots: 185,
+    motorLots: 10,
+    heavyLots: 0,
+    rateDescription: '$1.50 1st hr, $0.70 / sub 30 min',
+    shortRate: '$0.70/30m',
+    evChargingInfo: '2x SP Mobility 50kW DC Fast Chargers',
+    hasEv: true,
+    evChargerCount: 2,
+    hasFreeSunPh: false,
+    erpGantryFee: 0.0,
+    heightLimitMeters: 2.1,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3507, lng: 103.8486, mapX: 49, mapY: 51 },
+  },
+  {
+    id: 'bs-blk283',
+    code: 'BS-28',
+    name: 'Bishan North Blk 283',
+    address: 'Blk 283 Bishan St 22, S(570283)',
+    postalCode: '570283',
+    agency: 'HDB',
+    type: 'HDB MULTI-STOREY',
+    distanceMeters: 450,
+    walkMinutes: 6,
+    driveMinutes: 2,
+    totalLots: 240,
+    availableLots: 115,
+    carLots: 105,
+    motorLots: 10,
+    heavyLots: 0,
+    rateDescription: '$0.60 / 30 mins (HDB EPS standard)',
+    shortRate: '$0.60/30m',
+    hasEv: true,
+    evChargingInfo: '2x ChargEco 22kW AC Type 2',
+    evChargerCount: 2,
+    hasFreeSunPh: true,
+    freeParkingInfo: 'Free Parking Sunday & PH (7am – 10:30pm)',
+    erpGantryFee: 0.0,
+    heightLimitMeters: 2.15,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3582, lng: 103.8449, mapX: 45, mapY: 42 },
+  },
+];
+
+export const JURONG_CARPARKS: Carpark[] = [
+  {
+    id: 'je-jem',
+    code: 'JE-01',
+    name: 'JEM / Westgate Interlink',
+    address: '50 Jurong Gateway Rd, S(608532)',
+    postalCode: '608532',
+    agency: 'COMMERCIAL',
+    type: 'COMMERCIAL / MALL',
+    distanceMeters: 140,
+    walkMinutes: 2,
+    driveMinutes: 1,
+    totalLots: 880,
+    availableLots: 248,
+    carLots: 236,
+    motorLots: 12,
+    heavyLots: 0,
+    rateDescription: '$1.65 1st hr, $0.55 / sub 15 min',
+    shortRate: '$1.10/30m',
+    evChargingInfo: '6x CDG ENGIE 50kW DC Fast Chargers',
+    hasEv: true,
+    evChargerCount: 6,
+    hasFreeSunPh: false,
+    erpGantryFee: 0.0,
+    heightLimitMeters: 2.1,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3332, lng: 103.7431, mapX: 40, mapY: 53 },
+  },
+  {
+    id: 'je-blk135',
+    code: 'JE-13',
+    name: 'Blk 135 Jurong Gateway Rd',
+    address: 'Jurong Gateway Road, S(600135)',
+    postalCode: '600135',
+    agency: 'HDB',
+    type: 'HDB SURFACE LOT',
+    distanceMeters: 380,
+    walkMinutes: 5,
+    driveMinutes: 2,
+    totalLots: 195,
+    availableLots: 62,
+    carLots: 56,
+    motorLots: 6,
+    heavyLots: 0,
+    rateDescription: '$0.60 / 30 mins (HDB EPS)',
+    shortRate: '$0.60/30m',
+    hasEv: false,
+    hasFreeSunPh: true,
+    freeParkingInfo: 'Free Parking Sunday & PH (7am – 10:30pm)',
+    erpGantryFee: 0.0,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3345, lng: 103.7408, mapX: 38, mapY: 52 },
+  },
+];
+
+export const ANGMOKIO_CARPARKS: Carpark[] = [
+  {
+    id: 'amk-hub',
+    code: 'AM-01',
+    name: 'AMK Hub Basement',
+    address: '53 Ang Mo Kio Ave 3, S(569933)',
+    postalCode: '569933',
+    agency: 'COMMERCIAL',
+    type: 'COMMERCIAL / MALL',
+    distanceMeters: 130,
+    walkMinutes: 2,
+    driveMinutes: 1,
+    totalLots: 420,
+    availableLots: 178,
+    carLots: 168,
+    motorLots: 10,
+    heavyLots: 0,
+    rateDescription: '$1.40 1st hr, $0.70 / sub 30 min',
+    shortRate: '$0.70/30m',
+    evChargingInfo: '4x SP Mobility 22kW AC Type 2',
+    hasEv: true,
+    evChargerCount: 4,
+    hasFreeSunPh: false,
+    erpGantryFee: 0.0,
+    heightLimitMeters: 2.05,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3694, lng: 103.8485, mapX: 50, mapY: 34 },
+  },
+  {
+    id: 'amk-blk712',
+    code: 'AM-71',
+    name: 'Blk 712 AMK Central Ave 6',
+    address: 'Ang Mo Kio Ave 6, S(560712)',
+    postalCode: '560712',
+    agency: 'HDB',
+    type: 'HDB MULTI-STOREY',
+    distanceMeters: 310,
+    walkMinutes: 4,
+    driveMinutes: 2,
+    totalLots: 220,
+    availableLots: 84,
+    carLots: 76,
+    motorLots: 8,
+    heavyLots: 0,
+    rateDescription: '$0.60 / 30 mins (HDB EPS)',
+    shortRate: '$0.60/30m',
+    hasEv: true,
+    evChargingInfo: '2x ChargEco 22kW AC',
+    evChargerCount: 2,
+    hasFreeSunPh: true,
+    freeParkingInfo: 'Free Parking Sunday & PH (7am – 10:30pm)',
+    erpGantryFee: 0.0,
+    heightLimitMeters: 2.15,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3712, lng: 103.8462, mapX: 48, mapY: 32 },
+  },
+];
+
+export const BEDOK_CARPARKS: Carpark[] = [
+  {
+    id: 'bd-mall',
+    code: 'BD-01',
+    name: 'Bedok Mall Basement',
+    address: '311 New Upper Changi Rd, S(467360)',
+    postalCode: '467360',
+    agency: 'COMMERCIAL',
+    type: 'COMMERCIAL / MALL',
+    distanceMeters: 150,
+    walkMinutes: 2,
+    driveMinutes: 1,
+    totalLots: 320,
+    availableLots: 88,
+    carLots: 82,
+    motorLots: 6,
+    heavyLots: 0,
+    rateDescription: '$1.45 1st hr, $0.65 / sub 15 min',
+    shortRate: '$1.30/30m',
+    evChargingInfo: '2x SP Mobility DC Fast Chargers',
+    hasEv: true,
+    evChargerCount: 2,
+    hasFreeSunPh: false,
+    erpGantryFee: 0.0,
+    heightLimitMeters: 2.1,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3242, lng: 103.9301, mapX: 62, mapY: 60 },
+  },
+  {
+    id: 'bd-blk207',
+    code: 'BD-20',
+    name: 'Blk 207 Bedok Central',
+    address: 'Bedok North Street 1, S(460207)',
+    postalCode: '460207',
+    agency: 'HDB',
+    type: 'HDB MULTI-STOREY',
+    distanceMeters: 280,
+    walkMinutes: 3,
+    driveMinutes: 1,
+    totalLots: 280,
+    availableLots: 120,
+    carLots: 110,
+    motorLots: 10,
+    heavyLots: 0,
+    rateDescription: '$0.60 / 30 mins (HDB EPS)',
+    shortRate: '$0.60/30m',
+    hasEv: true,
+    evChargingInfo: '2x 22kW AC Type 2',
+    evChargerCount: 2,
+    hasFreeSunPh: true,
+    freeParkingInfo: 'Free Parking Sunday & PH (7am – 10:30pm)',
+    erpGantryFee: 0.0,
+    heightLimitMeters: 2.15,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.3255, lng: 103.9318, mapX: 64, mapY: 59 },
+  },
+];
+
+export const BUGIS_CARPARKS: Carpark[] = [
+  {
+    id: 'bg-junction',
+    code: 'BG-01',
+    name: 'Bugis Junction Basement',
+    address: '200 Victoria St, S(188021)',
+    postalCode: '188021',
+    agency: 'COMMERCIAL',
+    type: 'COMMERCIAL / MALL',
+    distanceMeters: 140,
+    walkMinutes: 2,
+    driveMinutes: 1,
+    totalLots: 560,
+    availableLots: 94,
+    carLots: 94,
+    motorLots: 15,
+    heavyLots: 0,
+    rateDescription: '$2.40 1st hr, $1.20 / sub 30 min',
+    shortRate: '$1.20/30m',
+    evChargingInfo: '4x Shell Recharge 50kW DC Fast Chargers',
+    hasEv: true,
+    evChargerCount: 4,
+    hasFreeSunPh: false,
+    erpGantryFee: 2.0,
+    heightLimitMeters: 2.05,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.2998, lng: 103.8552, mapX: 52, mapY: 52 },
+  },
+  {
+    id: 'bg-brasbasah',
+    code: 'BG-BB',
+    name: 'Bras Basah Complex',
+    address: '231 Bain St, S(180231)',
+    postalCode: '180231',
+    agency: 'HDB',
+    type: 'HDB MULTI-STOREY',
+    distanceMeters: 320,
+    walkMinutes: 4,
+    driveMinutes: 2,
+    totalLots: 340,
+    availableLots: 145,
+    carLots: 135,
+    motorLots: 10,
+    heavyLots: 0,
+    rateDescription: '$1.20 / 30 mins (Central Area HDB)',
+    shortRate: '$1.20/30m',
+    hasEv: false,
+    hasFreeSunPh: true,
+    freeParkingInfo: 'Free Parking Sunday & PH (7am – 10:30pm)',
+    erpGantryFee: 2.0,
+    heightLimitMeters: 2.1,
+    gracePeriodMinutes: 10,
+    coordinates: { lat: 1.2965, lng: 103.8532, mapX: 50, mapY: 54 },
+  },
+];
+
 export const MARINA_CARPARKS: Carpark[] = [
   {
     id: 'lta-1',
@@ -691,3 +1059,72 @@ export const TAMPINES_CARPARKS: Carpark[] = [
 // Helper to calculate total lots and available lots accurately matching 1,420 and 486
 export const TOTAL_LOTS_COUNT = 1420;
 export const AVAILABLE_LOTS_COUNT = 486;
+
+export const ALL_PRESET_CARPARKS: Carpark[] = [
+  ...TAMPINES_CARPARKS,
+  ...MARINA_CARPARKS,
+  ...ORCHARD_CARPARKS,
+  ...BISHAN_CARPARKS,
+  ...JURONG_CARPARKS,
+  ...ANGMOKIO_CARPARKS,
+  ...BEDOK_CARPARKS,
+  ...BUGIS_CARPARKS,
+];
+
+/**
+ * Searches across carparks using a flexible fuzzy query.
+ * Matches:
+ * - 6-digit postal code (exact or prefix)
+ * - Carpark name or development (e.g. "Suntec", "ION", "Takashimaya", "Blk 505", "Hawker", "Century")
+ * - Area / Town name (e.g. "Tampines", "Orchard", "Marina", "Bishan", "Jurong", "Ang Mo Kio", "Bedok", "Bugis")
+ * - Carpark code (e.g. "TM31", "TP04", "OTH-B1", "CP-1")
+ * - Agency (e.g. "HDB", "URA", "LTA")
+ * - Features (e.g. "EV", "Free Parking", "Charger")
+ */
+export function searchCarparksByQuery(query: string, sourceList: Carpark[] = ALL_PRESET_CARPARKS): Carpark[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return sourceList;
+
+  // Clean numbers for postal code search
+  const isNumericOnly = /^\d+$/.test(q);
+
+  return sourceList.filter((cp) => {
+    if (isNumericOnly) {
+      if (cp.postalCode.startsWith(q) || cp.address.includes(q) || cp.name.includes(q)) {
+        return true;
+      }
+    }
+
+    const nameMatch = cp.name.toLowerCase().includes(q);
+    const addressMatch = cp.address.toLowerCase().includes(q);
+    const codeMatch = cp.code.toLowerCase().includes(q);
+    const agencyMatch = cp.agency.toLowerCase().includes(q);
+    const typeMatch = cp.type.toLowerCase().includes(q);
+    const postalMatch = cp.postalCode.toLowerCase().includes(q);
+    const notesMatch = cp.notes?.toLowerCase().includes(q) || false;
+    const warningMatch = cp.warningNotice?.toLowerCase().includes(q) || false;
+
+    // Keyword shortcuts
+    if (q === 'ev' || q === 'charging' || q === 'charger') {
+      return cp.hasEv;
+    }
+    if (q === 'free' || q === 'free parking' || q === 'sun') {
+      return cp.hasFreeSunPh;
+    }
+    if (q === 'bike' || q === 'motor' || q === 'motorcycle') {
+      return cp.motorLots > 0;
+    }
+
+    return (
+      nameMatch ||
+      addressMatch ||
+      codeMatch ||
+      agencyMatch ||
+      typeMatch ||
+      postalMatch ||
+      notesMatch ||
+      warningMatch
+    );
+  });
+}
+

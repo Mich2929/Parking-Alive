@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import { Search, MapPin, Sparkles, AlertCircle, RefreshCw } from 'lucide-react';
 import { Header } from './components/Header';
 import { LiveStatusBar } from './components/LiveStatusBar';
 import { SearchAndFilters } from './components/SearchAndFilters';
@@ -23,6 +24,14 @@ import { HealthMonitorModal } from './components/HealthMonitorModal';
 import {
   TAMPINES_CARPARKS,
   MARINA_CARPARKS,
+  ORCHARD_CARPARKS,
+  BISHAN_CARPARKS,
+  JURONG_CARPARKS,
+  ANGMOKIO_CARPARKS,
+  BEDOK_CARPARKS,
+  BUGIS_CARPARKS,
+  ALL_PRESET_CARPARKS,
+  searchCarparksByQuery,
   HOTSPOTS,
   convertLtaItemToCarpark,
 } from './data/carparksData';
@@ -40,6 +49,7 @@ export default function App() {
   const [selectedHotspotId, setSelectedHotspotId] = useState<string>('tampines');
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [showMap, setShowMap] = useState<boolean>(true);
+  const [searchToast, setSearchToast] = useState<string | null>(null);
 
   // Active Modals State
   const [selectedCarpark, setSelectedCarpark] = useState<Carpark | null>(null);
@@ -81,57 +91,124 @@ export default function App() {
     fetchLtaFeed();
   }, [fetchLtaFeed]);
 
-  // Active hotspot information
+  // Master catalog merging live DataMall feeds with preset catalog
+  const masterCarparks = useMemo(() => {
+    if (ltaFeedData && ltaFeedData.length > 0) {
+      const liveCodes = new Set(ltaFeedData.map((d) => d.code.toLowerCase()));
+      const remainingPresets = ALL_PRESET_CARPARKS.filter(
+        (p) => !liveCodes.has(p.code.toLowerCase())
+      );
+      return [...ltaFeedData, ...remainingPresets];
+    }
+    return ALL_PRESET_CARPARKS;
+  }, [ltaFeedData]);
+
+  // Active hotspot information (if selected)
   const currentHotspot: Hotspot = useMemo(() => {
     const found = HOTSPOTS.find((h) => h.id === selectedHotspotId);
     return found || HOTSPOTS[0];
   }, [selectedHotspotId]);
 
-  // Handle Hotspot switch
+  // Handle Hotspot selection
   const handleSelectHotspot = (hotspotId: string) => {
     setSelectedHotspotId(hotspotId);
     const target = HOTSPOTS.find((h) => h.id === hotspotId);
     if (target) {
       setSearchQuery(target.postalCode);
-      if (target.id === 'marinabay') {
-        fetchLtaFeed('Marina');
-      } else if (target.id === 'tampines') {
-        fetchLtaFeed('Tampines');
-      }
+      fetchLtaFeed(target.areaName);
+      setSearchToast(`Switched to ${target.areaName} (${target.postalCode})`);
+      setTimeout(() => setSearchToast(null), 2500);
     }
   };
 
   // Trigger search execution
   const handleTriggerSearch = () => {
-    const trimmed = searchQuery.trim().toLowerCase();
+    const trimmed = searchQuery.trim();
+    if (!trimmed) {
+      setSearchQuery('520284');
+      setSelectedHotspotId('tampines');
+      return;
+    }
+
+    // Check if query matches any known hotspot
     const matched = HOTSPOTS.find(
       (h) =>
         h.postalCode.includes(trimmed) ||
-        h.name.toLowerCase().includes(trimmed) ||
-        h.areaName.toLowerCase().includes(trimmed)
+        h.name.toLowerCase().includes(trimmed.toLowerCase()) ||
+        h.areaName.toLowerCase().includes(trimmed.toLowerCase()) ||
+        h.id.toLowerCase() === trimmed.toLowerCase()
     );
+
     if (matched) {
       setSelectedHotspotId(matched.id);
       fetchLtaFeed(matched.areaName);
+      setSearchToast(`Found ${matched.areaName} lots`);
     } else {
+      setSelectedHotspotId('custom');
       fetchLtaFeed(trimmed);
+      setSearchToast(`Searched for "${trimmed}"`);
+    }
+
+    setTimeout(() => setSearchToast(null), 2500);
+
+    // Scroll to results section
+    const resultsEl = document.getElementById('carparks-results');
+    if (resultsEl) {
+      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
-  // Filter Carparks based on active hotspot and filter
+  // Filter Carparks based on search query, radius, and active filter pill
   const filteredCarparks = useMemo(() => {
     let list: Carpark[] = [];
+    const trimmed = searchQuery.trim();
 
-    if (selectedHotspotId === 'marinabay') {
-      list = [...MARINA_CARPARKS];
-    } else if (selectedHotspotId === 'tampines') {
-      list = [...TAMPINES_CARPARKS];
-    } else if (ltaFeedData && ltaFeedData.length > 0) {
-      list = [...ltaFeedData];
+    if (trimmed) {
+      // If default Tampines postal code and Tampines hotspot active:
+      if (trimmed === '520284' && selectedHotspotId === 'tampines') {
+        list = [...TAMPINES_CARPARKS];
+      } else {
+        // Perform instant fuzzy search across the catalog
+        list = searchCarparksByQuery(trimmed, masterCarparks);
+
+        // Fallback check: if no direct match, check if query matched hotspot area
+        if (list.length === 0) {
+          const matchedHotspot = HOTSPOTS.find(
+            (h) =>
+              h.name.toLowerCase().includes(trimmed.toLowerCase()) ||
+              h.areaName.toLowerCase().includes(trimmed.toLowerCase()) ||
+              h.postalCode.includes(trimmed)
+          );
+          if (matchedHotspot) {
+            if (matchedHotspot.id === 'marinabay') list = [...MARINA_CARPARKS];
+            else if (matchedHotspot.id === 'orchard') list = [...ORCHARD_CARPARKS];
+            else if (matchedHotspot.id === 'bishan') list = [...BISHAN_CARPARKS];
+            else if (matchedHotspot.id === 'jurong') list = [...JURONG_CARPARKS];
+            else if (matchedHotspot.id === 'angmokio') list = [...ANGMOKIO_CARPARKS];
+            else list = [...TAMPINES_CARPARKS];
+          }
+        }
+      }
     } else {
-      list = [...TAMPINES_CARPARKS];
+      // Empty search query -> fallback to selected hotspot or default
+      if (selectedHotspotId === 'marinabay') list = [...MARINA_CARPARKS];
+      else if (selectedHotspotId === 'orchard') list = [...ORCHARD_CARPARKS];
+      else if (selectedHotspotId === 'bishan') list = [...BISHAN_CARPARKS];
+      else if (selectedHotspotId === 'jurong') list = [...JURONG_CARPARKS];
+      else if (selectedHotspotId === 'angmokio') list = [...ANGMOKIO_CARPARKS];
+      else list = [...TAMPINES_CARPARKS];
     }
 
+    // Radius Scope Filter
+    if (radiusKm && list.length > 0) {
+      const maxMeters = radiusKm * 1000;
+      const withinRadius = list.filter((c) => c.distanceMeters <= maxMeters);
+      if (withinRadius.length > 0) {
+        list = withinRadius;
+      }
+    }
+
+    // Filter pills
     if (activeFilter === 'hdb') {
       list = list.filter((c) => c.agency === 'HDB');
     } else if (activeFilter === 'ura') {
@@ -145,7 +222,15 @@ export default function App() {
     }
 
     return list;
-  }, [selectedHotspotId, ltaFeedData, activeFilter, evMode, vehicleType]);
+  }, [
+    searchQuery,
+    selectedHotspotId,
+    masterCarparks,
+    radiusKm,
+    activeFilter,
+    evMode,
+    vehicleType,
+  ]);
 
   const scrollToMap = () => {
     const el = document.getElementById('spatial-map');
@@ -154,7 +239,7 @@ export default function App() {
     }
   };
 
-  // Compute live available sum
+  // Compute live totals from filtered carparks
   const liveAvailableCount = useMemo(() => {
     if (filteredCarparks.length === 0) return 0;
     return filteredCarparks.reduce((sum, cp) => sum + cp.availableLots, 0);
@@ -164,6 +249,63 @@ export default function App() {
     if (filteredCarparks.length === 0) return 0;
     return filteredCarparks.reduce((sum, cp) => sum + cp.totalLots, 0);
   }, [filteredCarparks]);
+
+  // Dynamic Results Summary content
+  const summaryData = useMemo(() => {
+    const trimmed = searchQuery.trim();
+
+    if (trimmed === '520284' && selectedHotspotId === 'tampines') {
+      return {
+        areaName: 'Tampines Central',
+        postalCode: '520284',
+        totalLots: 1420,
+        availableLots: 486,
+        avgRate: '$0.60 /30m',
+        nearestDistance: '180m (2 min walk)',
+        erpCount: 0,
+      };
+    }
+
+    const matchedHotspot = HOTSPOTS.find(
+      (h) =>
+        h.postalCode === trimmed ||
+        h.id === selectedHotspotId ||
+        h.name.toLowerCase() === trimmed.toLowerCase() ||
+        h.areaName.toLowerCase() === trimmed.toLowerCase()
+    );
+
+    if (matchedHotspot) {
+      return {
+        areaName: matchedHotspot.areaName,
+        postalCode: matchedHotspot.postalCode,
+        totalLots: liveTotalCount > 0 ? liveTotalCount : matchedHotspot.totalLots,
+        availableLots: liveAvailableCount > 0 ? liveAvailableCount : matchedHotspot.availableLots,
+        avgRate: matchedHotspot.avgRate.includes('/30m') ? matchedHotspot.avgRate : `${matchedHotspot.avgRate} /30m`,
+        nearestDistance: matchedHotspot.nearestDistance,
+        erpCount: matchedHotspot.erpCount,
+      };
+    }
+
+    // Custom Search Query Display
+    const firstMatch = filteredCarparks[0];
+    return {
+      areaName: trimmed ? `Search: "${trimmed}"` : 'All Singapore',
+      postalCode: firstMatch ? firstMatch.postalCode : 'Singapore',
+      totalLots: liveTotalCount,
+      availableLots: liveAvailableCount,
+      avgRate: firstMatch ? firstMatch.shortRate : '$0.60 /30m',
+      nearestDistance: firstMatch
+        ? `${firstMatch.distanceMeters}m (${firstMatch.walkMinutes} min walk)`
+        : 'N/A',
+      erpCount: firstMatch?.erpGantryFee ? 2 : 0,
+    };
+  }, [
+    searchQuery,
+    selectedHotspotId,
+    filteredCarparks,
+    liveTotalCount,
+    liveAvailableCount,
+  ]);
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
@@ -208,23 +350,34 @@ export default function App() {
 
             {/* Results Summary Bar */}
             <ResultsSummary
-              areaName={currentHotspot.areaName}
-              postalCode={currentHotspot.postalCode}
+              areaName={summaryData.areaName}
+              postalCode={summaryData.postalCode}
               count={filteredCarparks.length}
               radiusKm={radiusKm}
-              nearestDistance={currentHotspot.nearestDistance}
-              erpCount={currentHotspot.erpCount}
-              totalLots={
-                selectedHotspotId === 'tampines' ? currentHotspot.totalLots : liveTotalCount
-              }
-              availableLots={
-                selectedHotspotId === 'tampines' ? currentHotspot.availableLots : liveAvailableCount
-              }
-              estRate={currentHotspot.avgRate}
+              nearestDistance={summaryData.nearestDistance}
+              erpCount={summaryData.erpCount}
+              totalLots={summaryData.totalLots}
+              availableLots={summaryData.availableLots}
+              estRate={summaryData.avgRate}
             />
 
+            {/* Live Search Status Feedback Banner */}
+            {searchToast && (
+              <div className="bg-indigo-50 border-b border-indigo-100 py-2 px-4 transition-all animate-in fade-in slide-in-from-top-2">
+                <div className="max-w-7xl mx-auto flex items-center justify-between text-xs font-semibold text-[#3525cd]">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-[#3525cd] animate-pulse" />
+                    <span>{searchToast}</span>
+                  </div>
+                  <span className="text-[11px] text-indigo-500 font-medium">
+                    Showing {filteredCarparks.length} matching lots
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* Container for Carpark Cards Grid & Map */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div id="carparks-results" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
               {/* 3-Column Carpark Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredCarparks.map((carpark) => (
@@ -239,16 +392,62 @@ export default function App() {
               </div>
 
               {filteredCarparks.length === 0 && (
-                <div className="text-center py-12 bg-white rounded-xl border border-slate-200 p-8 my-4">
-                  <p className="text-sm font-semibold text-slate-700">
-                    No carparks matched this filter in {currentHotspot.areaName}.
+                <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 p-8 my-4 shadow-xs">
+                  <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400 mb-3">
+                    <Search className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-extrabold text-slate-900">
+                    No carparks found matching "{searchQuery}"
+                  </h3>
+                  <p className="text-xs text-slate-500 max-w-md mx-auto mt-1 leading-relaxed">
+                    We couldn't find any parking facilities matching this search query within {radiusKm} km. Try one of our popular Singapore transit hubs below:
                   </p>
-                  <button
-                    onClick={() => setActiveFilter('all')}
-                    className="mt-3 px-4 py-1.5 rounded-lg bg-[#3525cd] text-white text-xs font-bold cursor-pointer"
-                  >
-                    Reset Filter
-                  </button>
+
+                  <div className="flex items-center justify-center gap-2 flex-wrap mt-4">
+                    <button
+                      onClick={() => handleSelectHotspot('tampines')}
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      Tampines Hub (520284)
+                    </button>
+                    <button
+                      onClick={() => handleSelectHotspot('marinabay')}
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      Marina Bay CBD (018956)
+                    </button>
+                    <button
+                      onClick={() => handleSelectHotspot('orchard')}
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      Orchard Shopping Belt (238801)
+                    </button>
+                    <button
+                      onClick={() => handleSelectHotspot('bishan')}
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      Bishan Junction 8 (579837)
+                    </button>
+                    <button
+                      onClick={() => handleSelectHotspot('jurong')}
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      Jurong East MRT (609731)
+                    </button>
+                  </div>
+
+                  <div className="pt-4 mt-4 border-t border-slate-100">
+                    <button
+                      onClick={() => {
+                        setSearchQuery('520284');
+                        setSelectedHotspotId('tampines');
+                        setActiveFilter('all');
+                      }}
+                      className="px-4 py-2 rounded-lg bg-[#3525cd] hover:bg-[#2a1ca8] text-white text-xs font-bold transition-colors shadow-xs cursor-pointer"
+                    >
+                      Reset to Tampines (520284)
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -256,8 +455,8 @@ export default function App() {
               {showMap && (
                 <SpatialMap
                   carparks={filteredCarparks}
-                  areaName={currentHotspot.areaName}
-                  postalCode={currentHotspot.postalCode}
+                  areaName={summaryData.areaName}
+                  postalCode={summaryData.postalCode}
                   onSelectCarpark={(cp) => setSelectedCarpark(cp)}
                   onOpenDirections={(cp) => setSelectedCarpark(cp)}
                 />

@@ -102,7 +102,13 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
         </div>
 
         {/* Row 2: Search Input and Actions */}
-        <div className="flex items-center gap-2.5">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onTriggerSearch();
+          }}
+          className="flex items-center gap-2.5"
+        >
           <div className="relative flex-1">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <Search className="h-4 w-4" />
@@ -111,12 +117,12 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
               placeholder="Enter 6-digit postal code (e.g. 520284) or area name (e.g. Tampines, Orchard)..."
               className="block w-full pl-10 pr-9 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-hidden focus:bg-white focus:border-[#3525cd] focus:ring-2 focus:ring-[#3525cd]/15 transition-all"
             />
             {searchQuery && (
               <button
+                type="button"
                 onClick={handleClear}
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
                 title="Clear input"
@@ -128,7 +134,7 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
 
           {/* Action button: Find Nearby Lots */}
           <button
-            onClick={onTriggerSearch}
+            type="submit"
             className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold bg-indigo-50 text-[#3525cd] hover:bg-indigo-100 border border-indigo-200 transition-colors shadow-2xs whitespace-nowrap cursor-pointer"
           >
             <Navigation className="w-4 h-4 text-[#3525cd]" />
@@ -137,6 +143,7 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
 
           {/* Toggle Map View button */}
           <button
+            type="button"
             onClick={() => {
               setShowMap(!showMap);
               if (!showMap) {
@@ -152,7 +159,7 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
             <Map className="w-4 h-4" />
             <span>Map</span>
           </button>
-        </div>
+        </form>
 
         {/* Row 3: Hotspots */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
