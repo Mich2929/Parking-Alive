@@ -130,7 +130,7 @@ try {
   if (currentArg.includes('health.js') || currentArg.includes('heath.js')) {
     (async () => {
       console.log('\n==================================================');
-      console.log('  🔍 ParkWhere SG - API & LTA DataMall Health Monitor');
+      console.log('  🔍 Where2Park - API & LTA DataMall Health Monitor');
       console.log('==================================================\n');
       console.log('Probing endpoint: ' + LTA_ENDPOINT + ' ...');
 

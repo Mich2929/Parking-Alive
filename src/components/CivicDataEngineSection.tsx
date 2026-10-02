@@ -36,7 +36,7 @@ export const CivicDataEngineSection: React.FC<CivicDataEngineSectionProps> = ({
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
                 Time is precious. During peak hours, drivers lose up to 20 minutes circling blocks
-                for parking. ParkWhere SG displays real-time lot availability with instant{' '}
+                for parking. Where2Park displays real-time lot availability with instant{' '}
                 <strong className="text-emerald-700 font-bold">Green</strong> /{' '}
                 <strong className="text-amber-700 font-bold">Amber</strong> /{' '}
                 <strong className="text-rose-700 font-bold">Red</strong> indicators so you make
@@ -55,7 +55,7 @@ export const CivicDataEngineSection: React.FC<CivicDataEngineSectionProps> = ({
             </h2>
             <div className="text-slate-600 text-sm leading-relaxed space-y-3 mt-3">
               <p>
-                <strong>ParkWhere SG</strong> shows you live carpark availability across Singapore —
+                <strong>Where2Park</strong> shows you live carpark availability across Singapore —
                 HDB, URA, and LTA carparks — sorted by distance from wherever you are. Allow
                 location access and you'll instantly see the nearest carparks that still have free
                 lots, colour-coded so you can read availability at a glance, with one tap to open
@@ -63,7 +63,7 @@ export const CivicDataEngineSection: React.FC<CivicDataEngineSectionProps> = ({
                 Singapore's official LTA DataMall open-data feeds.
               </p>
               <p>
-                Beyond finding a space, ParkWhere SG helps you drive smarter. Check{' '}
+                Beyond finding a space, Where2Park helps you drive smarter. Check{' '}
                 <button
                   onClick={() => onNavigateTab('erp')}
                   className="text-[#3525cd] font-semibold underline underline-offset-2 hover:text-indigo-800 cursor-pointer"

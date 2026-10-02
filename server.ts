@@ -64,7 +64,7 @@ async function startServer() {
   }
 
   app.listen(Number(PORT), '0.0.0.0', () => {
-    console.log(`[ParkWhere SG] Server running on http://0.0.0.0:${PORT}`);
+    console.log(`[Where2Park] Server running on http://0.0.0.0:${PORT}`);
     console.log(`[LTA API] Carpark Availability: http://localhost:${PORT}/apt/carparks`);
     console.log(`[Health Monitor] Diagnostics: http://localhost:${PORT}/apt/health`);
   });

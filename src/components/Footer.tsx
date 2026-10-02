@@ -1,4 +1,5 @@
 import React from 'react';
+import { Logo } from './Logo';
 
 interface FooterProps {
   onNavigateTab: (tab: 'parking' | 'erp' | 'cameras' | 'ev') => void;
@@ -12,16 +13,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateTab, onOpenHealthModal
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 border-b border-slate-100">
           {/* Brand & Description */}
           <div className="md:col-span-6 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-md bg-[#3525cd] flex items-center justify-center text-white font-extrabold text-xs">
-                P
-              </div>
-              <span className="font-extrabold text-slate-900 tracking-tight text-sm">
-                ParkWhere<span className="text-[#3525cd]">SG</span>
-              </span>
-            </div>
+            <Logo size="md" />
             <p className="text-xs text-slate-500 leading-relaxed max-w-md">
-              Real-time civic mobility and carpark intelligence platform aggregated from official
+              Where2Park is Singapore's premier real-time civic mobility and carpark intelligence platform aggregated from official
               Singapore Open Data endpoints. Built for drivers, riders, and transport planners.
             </p>
             <div className="flex items-center gap-2 pt-1">
@@ -141,7 +135,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateTab, onOpenHealthModal
 
         {/* Bottom copyright line */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
-          <p>© 2026 ParkWhere SG. Licensed under the Singapore Open Data Licence.</p>
+          <p>© 2026 Where2Park Singapore. Licensed under the Singapore Open Data Licence.</p>
           <span className="font-medium text-slate-400">SG GovTech Standard Compliant</span>
         </div>
       </div>

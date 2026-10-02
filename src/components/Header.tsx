@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigation, User, MapPin, Activity } from 'lucide-react';
+import { Logo } from './Logo';
 
 interface HeaderProps {
   activeTab: 'parking' | 'erp' | 'cameras' | 'ev';
@@ -26,21 +27,9 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-3">
             <button
               onClick={() => setActiveTab('parking')}
-              className="flex items-center gap-2.5 text-left focus:outline-hidden group"
+              className="flex items-center text-left focus:outline-hidden group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-[#3525cd] flex items-center justify-center text-white font-extrabold text-xl shadow-xs group-hover:bg-[#2d1fb8] transition-colors">
-                P
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-slate-900 tracking-tight text-lg leading-none">
-                    ParkWhere<span className="text-[#3525cd]">SG</span>
-                  </span>
-                </div>
-                <span className="text-[10px] font-semibold text-slate-500 tracking-wider uppercase block mt-0.5">
-                  GOVTECH DATA ENGINE
-                </span>
-              </div>
+              <Logo size="md" />
             </button>
 
             {/* Singapore GPS Active Pill */}

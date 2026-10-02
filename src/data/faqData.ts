@@ -3,9 +3,9 @@ import { FaqItem } from '../types';
 export const FAQ_ITEMS: FaqItem[] = [
   {
     id: 'faq-1',
-    question: 'Is ParkWhere SG free to use?',
+    question: 'Is Where2Park free to use?',
     answer:
-      'Yes, 100% free with no subscription, registration, or app-store installation required. ParkWhere SG runs directly in your mobile or desktop web browser and does not collect personal identity data.',
+      'Yes, 100% free with no subscription, registration, or app-store installation required. Where2Park runs directly in your mobile or desktop web browser and does not collect personal identity data.',
   },
   {
     id: 'faq-2',
@@ -21,7 +21,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: 'faq-4',
-    question: 'Can I use ParkWhere without sharing my GPS location?',
+    question: 'Can I use Where2Park without sharing my GPS location?',
     answer:
       'Absolutely. You can manually enter any 6-digit Singapore postal code (e.g. 520284, 238801) or type area names (e.g. "Tampines Central", "Jurong East", "Orchard") into the search bar, or select any of our quick hotspot shortcuts.',
   },

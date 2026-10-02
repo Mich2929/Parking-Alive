@@ -239,7 +239,7 @@ export async function getCarParkAvailability(options = {}) {
     'odata.metadata': 'http://datamall2.mytransport.sg/ltaodataservice/$metadata#CarParkAvailability',
     count: enriched.length,
     isLive,
-    source: isLive ? 'LTA DataMall CarParkAvailabilityv2 (Live API)' : 'ParkWhere SG Cached Civic Feed',
+    source: isLive ? 'LTA DataMall CarParkAvailabilityv2 (Live API)' : 'Where2Park Cached Civic Feed',
     latencyMs: Date.now() - startTime,
     keyConfigured: Boolean(accountKey),
     statusMessage: errorMsg || 'OK',
